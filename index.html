@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>HACKING...</title>
+<style>
+    body {
+        background: black;
+        color: #00ff00;
+        font-family: monospace;
+        font-size: 18px;
+        padding: 10px;
+    }
+    #console {
+        white-space: pre-line;
+    }
+</style>
+</head>
+<body>
+
+<div id="console">Khởi động hệ thống...\n</div>
+
+<script>
+const consoleBox = document.getElementById("console");
+
+function printLine(text) {
+    consoleBox.innerText += text + "\n";
+    consoleBox.scrollTop = consoleBox.scrollHeight;
+}
+
+function randomIP() {
+    return "192.168." + Math.floor(Math.random()*255) + "." + Math.floor(Math.random()*255);
+}
+
+let steps = [
+    "Đang kết nối...",
+    "Gửi yêu cầu xâm nhập...",
+    "Phân tích tường lửa...",
+    "Lấy dữ liệu IP mục tiêu: " + randomIP(),
+    "Giải mã dữ liệu...",
+    "Chiếm quyền điều khiển...",
+    "✔ Thành công! Hệ thống đã bị hack!"
+];
+
+let index = 0;
+function run() {
+    if(index < steps.length) {
+        printLine(steps[index]);
+        index++;
+        setTimeout(run, 900);
+    } else {
+        printLine("\n< QUÁ TRÌNH HOÀN TẤT >");
+    }
+}
+
+run();
+</script>
+</body>
+</html>
