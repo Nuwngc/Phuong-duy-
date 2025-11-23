@@ -1,59 +1,52 @@
-<!DOCTYPE html>
-<html lang="vi">
+<!doctype html>
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Tặng acc liên quân</title>
-<style>
-    body {
-        background: black;
-        color: #00ff00;
-        font-family: monospace;
-        font-size: 18px;
-        padding: 10px;
-    }
-    #console {
-        white-space: pre-line;
-    }
-</style>
+  <meta charset="utf-8">
+  <title>Gallery công cộng</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:sans-serif;padding:16px}
+    .grid{display:flex;flex-wrap:wrap;gap:12px}
+    .card{width:220px;border:1px solid #ddd;padding:8px;border-radius:8px}
+    video,img{max-width:100%;height:auto;border-radius:6px}
+    .uploader{font-size:12px;color:#555}
+  </style>
 </head>
 <body>
+<h1>Gallery công cộng</h1>
 
-<div id="console">Khởi động hệ thống...\n</div>
+<div id="auth">
+  <div id="userArea" style="display:none">
+    <span id="userEmail"></span>
+    <button id="btnLogout">Đăng xuất</button>
+  </div>
+  <div id="loginArea">
+    <input id="email" placeholder="Email">
+    <input id="password" placeholder="Mật khẩu" type="password">
+    <button id="btnRegister">Đăng ký</button>
+    <button id="btnLogin">Đăng nhập</button>
+  </div>
+</div>
 
-<script>
-const consoleBox = document.getElementById("console");
+<hr>
 
-function printLine(text) {
-    consoleBox.innerText += text + "\n";
-    consoleBox.scrollTop = consoleBox.scrollHeight;
-}
+<div id="uploadArea" style="display:none">
+  <input type="file" id="fileInput" accept="image/*,video/*">
+  <input type="text" id="title" placeholder="Tiêu đề (tùy chọn)">
+  <label><input type="checkbox" id="isPublic" checked> Công khai</label>
+  <button id="btnUpload">Upload</button>
+</div>
 
-function randomIP() {
-    return "192.168." + Math.floor(Math.random()*255) + "." + Math.floor(Math.random()*255);
-}
+<hr>
 
-let steps = [
-    "Đang kết nối...",
-    "Gửi yêu cầu xâm nhập...",
-    "Phân tích tường lửa...",
-    "Lấy dữ liệu IP mục tiêu: " + randomIP(),
-    "Giải mã dữ liệu...",
-    "Chiếm quyền điều khiển...",
-    "✔ Thành công! Hệ thống đã bị hack!"
-];
+<h2>Ảnh & Video công khai</h2>
+<div id="gallery" class="grid"></div>
 
-let index = 0;
-function run() {
-    if(index < steps.length) {
-        printLine(steps[index]);
-        index++;
-        setTimeout(run, 900);
-    } else {
-        printLine("\n< QUÁ TRÌNH HOÀN TẤT >");
-    }
-}
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-auth.js";
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-storage.js";
+import { getFirestore, collection, addDoc, query, where, getDocs, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore.js";
 
-run();
-</script>
-</body>
-</html>
+// --- Firebase Config của bạn ---
+const fi
